@@ -3,7 +3,6 @@ import random
 import time
 import tweepy
 import schedule
-from tweepy import Status
 
 #importar configuraciones de twitter
 from botfit_config import consumer_key,consumer_secret,access_token,access_token_secret
@@ -16,11 +15,8 @@ api = tweepy.API(auth)
 
 #Funcion para saber porcentaje de fit al azar
 def fitporcent():
-     num=float(100)
-     num2=random.randint(1,100)
-     num3=random.randint(1,100)
-     porcent=(num2*num3)/num
-     fitness= int(porcent)
+     num = random.randint(20,100)
+     fitness= num
      return fitness
 impresion = fitporcent()
 #Funcion para Twittear, y lo que queremos que twittee.
@@ -54,13 +50,17 @@ def leer_ultimaid():
 def check_mentions():
      menciones=api.mentions_timeline(leer_ultimaid(),tweet_mode = 'extended')
      for tweet in reversed(menciones):
-         print(tweet.full_text)
-         respuesta(tweet)
+          print(tweet.full_text)
+          respuesta(tweet)
 
 #Respuesta del tweet
 def respuesta(tweet):
-     api.update_status("@"+tweet.user.screen_name+' sos '+str(impresion)+" % musculoso", tweet.id)
-     almacenamientoid(tweet.id)
+          api.update_status("@"+tweet.user.screen_name+' sos '+str(impresion)+" % musculoso", tweet.id)
+          almacenamientoid(tweet.id)
+
+# def respuesta_escracho(tweet):
+#           api.update_status("@"+tweet.user.screen_name+' Esa es tu realidad escracho', tweet.id)
+#           almacenamientoid(tweet.id)
 
 #Definicion del main
 if __name__=="__main__":
